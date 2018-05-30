@@ -1,7 +1,7 @@
 package s3test
 
 import (
-	"github.com/stretchr/testify/suite"
+    "github.com/stretchr/testify/suite"
 	"testing"
 
 	. "../Utilities"
