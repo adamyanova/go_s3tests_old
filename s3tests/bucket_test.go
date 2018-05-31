@@ -231,23 +231,23 @@ func (suite *S3Suite) TestBucketCreateBadExpectEmpty() {
 	assert.Nil(err)
 }
 
-func (suite *S3Suite) TestBucketCreateBadExpectUnreadable() {
+// func (suite *S3Suite) TestBucketCreateBadExpectUnreadable() {
 
-	/*
-		Resource : bucket, method: put
-		Scenario :create w/expect nongraphic.
-		Assertion: garbage, but S3 succeeds!
-	*/
+// 	/*
+// 		Resource : bucket, method: put
+// 		Scenario :create w/expect nongraphic.
+// 		Assertion: garbage, but S3 succeeds!
+// 	*/
 
-	assert := suite
-	acl := map[string]string{"Expect": "\x07"}
+// 	assert := suite
+// 	acl := map[string]string{"Expect": "\x07"}
 
-	bucket := GetBucketName()
-	err := CreateBucket(svc, bucket)
+// 	bucket := GetBucketName()
+// 	err := CreateBucket(svc, bucket)
 
-	err = CreateBucketWithHeader(svc, bucket, acl)
-	assert.Nil(err)
-}
+// 	err = CreateBucketWithHeader(svc, bucket, acl)
+// 	assert.Nil(err)
+// }
 
 func (suite *S3Suite) TestBucketCreateBadContentLengthEmpty() {
 
@@ -421,88 +421,88 @@ func (suite *S3Suite) TestLifecycleGetNoLifecycle() {
 	}
 }
 
-func (suite *S3Suite) TestLifecycleInvalidMD5() {
+// func (suite *S3Suite) TestLifecycleInvalidMD5() {
 
-	/*
-		Resource : bucket, method: get
-		Scenario : set lifecycle config with invalid md5.
-		Assertion: fails
-	*/
+// 	/*
+// 		Resource : bucket, method: get
+// 		Scenario : set lifecycle config with invalid md5.
+// 		Assertion: fails
+// 	*/
 
-	assert := suite
+// 	assert := suite
 
-	bucket := GetBucketName()
-	err := CreateBucket(svc, bucket)
+// 	bucket := GetBucketName()
+// 	err := CreateBucket(svc, bucket)
 
-	content := strings.NewReader("Enabled")
-	h := md5.New()
-	content.WriteTo(h)
-	sum := h.Sum(nil)
-	b := make([]byte, base64.StdEncoding.EncodedLen(len(sum)))
-	base64.StdEncoding.Encode(b, sum)
+// 	content := strings.NewReader("Enabled")
+// 	h := md5.New()
+// 	content.WriteTo(h)
+// 	sum := h.Sum(nil)
+// 	b := make([]byte, base64.StdEncoding.EncodedLen(len(sum)))
+// 	base64.StdEncoding.Encode(b, sum)
 
-	md5 := string(b)
+// 	md5 := string(b)
 
-	_, err = SetLifecycle(svc, bucket, "rule1", "Enabled", md5)
-	assert.NotNil(err)
-	if err != nil {
-		if awsErr, ok := err.(awserr.Error); ok {
+// 	_, err = SetLifecycle(svc, bucket, "rule1", "Enabled", md5)
+// 	assert.NotNil(err)
+// 	if err != nil {
+// 		if awsErr, ok := err.(awserr.Error); ok {
 
-			assert.Equal(awsErr.Code(), "NotImplemented")
-			assert.Equal(awsErr.Message(), "")
-		}
-	}
-}
+// 			assert.Equal(awsErr.Code(), "NotImplemented")
+// 			assert.Equal(awsErr.Message(), "")
+// 		}
+// 	}
+// }
 
-func (suite *S3Suite) TestLifecycleInvalidStatus() {
+// func (suite *S3Suite) TestLifecycleInvalidStatus() {
 
-	/*
-		Resource : bucket, method: get
-		Scenario : invalid status in lifecycle rule.
-		Assertion: fails
-	*/
+// 	/*
+// 		Resource : bucket, method: get
+// 		Scenario : invalid status in lifecycle rule.
+// 		Assertion: fails
+// 	*/
 
-	assert := suite
+// 	assert := suite
 
-	bucket := GetBucketName()
-	err := CreateBucket(svc, bucket)
+// 	bucket := GetBucketName()
+// 	err := CreateBucket(svc, bucket)
 
-	content := strings.NewReader("Enabled")
-	h := md5.New()
-	content.WriteTo(h)
-	sum := h.Sum(nil)
-	b := make([]byte, base64.StdEncoding.EncodedLen(len(sum)))
-	base64.StdEncoding.Encode(b, sum)
+// 	content := strings.NewReader("Enabled")
+// 	h := md5.New()
+// 	content.WriteTo(h)
+// 	sum := h.Sum(nil)
+// 	b := make([]byte, base64.StdEncoding.EncodedLen(len(sum)))
+// 	base64.StdEncoding.Encode(b, sum)
 
-	md5 := string(b)
+// 	md5 := string(b)
 
-	_, err = SetLifecycle(svc, bucket, "rule1", "enabled", md5)
-	assert.NotNil(err)
-	if err != nil {
-		if awsErr, ok := err.(awserr.Error); ok {
+// 	_, err = SetLifecycle(svc, bucket, "rule1", "enabled", md5)
+// 	assert.NotNil(err)
+// 	if err != nil {
+// 		if awsErr, ok := err.(awserr.Error); ok {
 
-			assert.Equal(awsErr.Code(), "NotImplemented")
-			assert.Equal(awsErr.Message(), "")
-		}
-	}
+// 			assert.Equal(awsErr.Code(), "NotImplemented")
+// 			assert.Equal(awsErr.Message(), "")
+// 		}
+// 	}
 
-	_, err = SetLifecycle(svc, bucket, "rule1", "disabled", md5)
-	assert.NotNil(err)
-	if err != nil {
-		if awsErr, ok := err.(awserr.Error); ok {
+// 	_, err = SetLifecycle(svc, bucket, "rule1", "disabled", md5)
+// 	assert.NotNil(err)
+// 	if err != nil {
+// 		if awsErr, ok := err.(awserr.Error); ok {
 
-			assert.Equal(awsErr.Code(), "NotImplemented")
-			assert.Equal(awsErr.Message(), "")
-		}
-	}
+// 			assert.Equal(awsErr.Code(), "NotImplemented")
+// 			assert.Equal(awsErr.Message(), "")
+// 		}
+// 	}
 
-	_, err = SetLifecycle(svc, bucket, "rule1", "invalid", md5)
-	assert.NotNil(err)
-	if err != nil {
-		if awsErr, ok := err.(awserr.Error); ok {
+// 	_, err = SetLifecycle(svc, bucket, "rule1", "invalid", md5)
+// 	assert.NotNil(err)
+// 	if err != nil {
+// 		if awsErr, ok := err.(awserr.Error); ok {
 
-			assert.Equal(awsErr.Code(), "NotImplemented")
-			assert.Equal(awsErr.Message(), "")
-		}
-	}
-}
+// 			assert.Equal(awsErr.Code(), "NotImplemented")
+// 			assert.Equal(awsErr.Message(), "")
+// 		}
+// 	}
+// }
