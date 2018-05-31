@@ -2,7 +2,7 @@
 [DEFAULT]
 
 host = "172.21.15.100"
-port = "7284"
+port = "7280"
 is_secure = "yes"
 
 [fixtures]
@@ -15,9 +15,9 @@ access_key = "0555b35654ad1656d804"
 access_secret = "h7GhxuBLTrlhVUyxSPUKUV8r/2EI4ngqJxD7iBdBYLhwluN30JaT3Q=="
 bucket = "bucket1"
 region = "us-east-1"
-endpoint = "172.21.15.100:7284"
+endpoint = "172.21.15.100:7280"
 host = "172.21.15.100"
-port = "7284"
+port = "7280"
 display_name = "Mr. Tester"
 email = "tester@ceph.com"
 is_secure = false
@@ -27,11 +27,11 @@ kmskeyid = "barbican_key_id"
 
 [s3alt]
 
-access_key = "0555b35654ad1656d804"
-access_secret = "h7GhxuBLTrlhVUyxSPUKUV8r/2EI4ngqJxD7iBdBYLhwluN30JaT3Q=="
+access_key = "NOPQRSTUVWXYZABCDEFG"
+access_secret = "nopqrstuvwxyzabcdefghijklmnabcdefghijklm"
 bucket = "bucket1"
 region = "us-east-1"
-endpoint = "172.21.15.100:7284"
+endpoint = "172.21.15.100:7280"
 display_name = "John Doe"
 email = "johndoe@gmail.com"
 SSE = "your SSE"
