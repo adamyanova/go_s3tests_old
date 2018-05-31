@@ -1,8 +1,8 @@
 
 [DEFAULT]
 
-host = "s3.amazonaws.com"
-port = "8080"
+host = "172.21.15.84"
+port = "7284"
 is_secure = "yes"
 
 [fixtures]
@@ -15,11 +15,11 @@ access_key = "0555b35654ad1656d804"
 access_secret = "h7GhxuBLTrlhVUyxSPUKUV8r/2EI4ngqJxD7iBdBYLhwluN30JaT3Q=="
 bucket = "bucket1"
 region = "us-east-1"
-endpoint = "localhost:8000"
-host = "localhost"
-port = "8000"
-display_name = ""
-email = "someone@gmail.com"
+endpoint = "172.21.15.84:7284"
+host = "172.21.15.84"
+port = "7284"
+display_name = "Mr. Tester"
+email = "tester@ceph.com"
 is_secure = false
 SSE = "AES256"
 kmskeyid = "barbican_key_id"
@@ -31,9 +31,9 @@ access_key = "0555b35654ad1656d804"
 access_secret = "h7GhxuBLTrlhVUyxSPUKUV8r/2EI4ngqJxD7iBdBYLhwluN30JaT3Q=="
 bucket = "bucket1"
 region = "us-east-1"
-endpoint = "localhost:8000"
-display_name = ""
-email = "someone@gmail.com"
+endpoint = "172.21.15.84:7284"
+display_name = "John Doe"
+email = "johndoe@gmail.com"
 SSE = "your SSE"
 kmskeyid = "barbican_key_id"
 is_secure = false
