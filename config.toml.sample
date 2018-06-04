@@ -1,7 +1,7 @@
 
 [DEFAULT]
 
-host = "172.21.15.071"
+host = "172.21.15.073"
 port = "7280"
 is_secure = "yes"
 
@@ -15,8 +15,8 @@ access_key = "0555b35654ad1656d804"
 access_secret = "h7GhxuBLTrlhVUyxSPUKUV8r/2EI4ngqJxD7iBdBYLhwluN30JaT3Q=="
 bucket = "bucket1"
 region = "us-east-1"
-endpoint = "172.21.15.071:7280"
-host = "172.21.15.071"
+endpoint = "172.21.15.073:7280"
+host = "172.21.15.073"
 port = "7280"
 display_name = "Mr. Tester"
 email = "tester@ceph.com"
@@ -31,7 +31,7 @@ access_key = "NOPQRSTUVWXYZABCDEFG"
 access_secret = "nopqrstuvwxyzabcdefghijklmnabcdefghijklm"
 bucket = "bucket1"
 region = "us-east-1"
-endpoint = "172.21.15.071:7280"
+endpoint = "172.21.15.073:7280"
 display_name = "John Doe"
 email = "johndoe@gmail.com"
 SSE = "your SSE"
