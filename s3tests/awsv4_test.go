@@ -21,14 +21,13 @@ import (
 func (suite *S3Suite) TestPresignRequest() {
 
 	assert := suite
-	region := viper.GetString("s3main.region")
-	req, body := SetupRequest("S3", region, "{}")
-
-	signer := SetupSigner(Creds)
-	signer.Presign(req, body, "s3", region, 300*time.Second, time.Unix(0, 0))
-
 	assert.Equal(5,5) // delete line and uncomment section below
 
+	// region := viper.GetString("s3main.region")
+	// req, body := SetupRequest("S3", region, "{}")
+
+	// signer := SetupSigner(Creds)
+	// signer.Presign(req, body, "s3", region, 300*time.Second, time.Unix(0, 0))
 	// qry := req.URL.Query()
 	// assert.Equal("5cb339c731e21d25810fea3eeb399bd33a4ea75631d9f9e7f8a8c65d271b7dad", qry.Get("X-Amz-Signature"))
 	// assert.Equal("0555b35654ad1656d804/19700101/us-east-1/s3/aws4_request", qry.Get("X-Amz-Credential"))
@@ -39,10 +38,10 @@ func (suite *S3Suite) TestPresignRequest() {
 func (suite *S3Suite) TestSignRequest() {
 
 	assert := suite
-	region := viper.GetString("s3main.region")
-	req, body := SetupRequest("S3", region, "{}")
-	expectedauth := "AWS4-HMAC-SHA256 Credential=0555b35654ad1656d804/19700101/us-east-1/s3/aws4_request, SignedHeaders=content-length;content-type;host;x-amz-content-sha256;x-amz-date;x-amz-meta-other-header;x-amz-meta-other-header_with_underscore;x-amz-target, Signature=605bf71358a549b8aa9461aeb0944908a62395efdf4bb5fc8bdb47b48147a426"
-	signer := SetupSigner(Creds)
+	// region := viper.GetString("s3main.region")
+	// req, body := SetupRequest("S3", region, "{}")
+	// expectedauth := "AWS4-HMAC-SHA256 Credential=0555b35654ad1656d804/19700101/us-east-1/s3/aws4_request, SignedHeaders=content-length;content-type;host;x-amz-content-sha256;x-amz-date;x-amz-meta-other-header;x-amz-meta-other-header_with_underscore;x-amz-target, Signature=605bf71358a549b8aa9461aeb0944908a62395efdf4bb5fc8bdb47b48147a426"
+	// signer := SetupSigner(Creds)
 
 	assert.Equal(5,5) // delete line and uncomment section below
 	// signer.Sign(req, body, "s3", region, time.Unix(0, 0))
@@ -182,15 +181,15 @@ func (suite *S3Suite) TestSignWithBodyNoReplaceRequestBody() {
 func (suite *S3Suite) TestPresignHandler() {
 
 	assert := suite
-	req, _ := svc.PutObjectRequest(&s3.PutObjectInput{
-		Bucket:             aws.String("bucket"),
-		Key:                aws.String("key"),
-		ContentDisposition: aws.String("a+b c$d"),
-		ACL:                aws.String("public-read"),
-	})
+	// req, _ := svc.PutObjectRequest(&s3.PutObjectInput{
+	// 	Bucket:             aws.String("bucket"),
+	// 	Key:                aws.String("key"),
+	// 	ContentDisposition: aws.String("a+b c$d"),
+	// 	ACL:                aws.String("public-read"),
+	// })
 
-	req.Time = time.Unix(0, 0)
-	urlstr, err := req.Presign(5 * time.Minute)
+	// req.Time = time.Unix(0, 0)
+	// urlstr, err := req.Presign(5 * time.Minute)
 
 	assert.Equal(5,5)  // delete line and uncomment section below
 	// assert.Nil(err)
