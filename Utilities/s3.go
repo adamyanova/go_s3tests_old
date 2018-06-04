@@ -32,7 +32,8 @@ func LoadConfig() error {
 	fmt.Println(viper.ConfigFileUsed())
   	err := viper.ReadInConfig() 
   	if err != nil {
-    	fmt.Println("Config file not found...")
+		fmt.Println(err)
+		fmt.Println("Config file not found...")
   	}
 
   	return err
