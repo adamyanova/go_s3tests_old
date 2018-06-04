@@ -24,7 +24,7 @@ import (
 func LoadConfig() error {
 
 	viper.SetConfigType("yaml")
-	viper.AddConfigPath("../")
+	// viper.AddConfigPath("../")
 	viper.SetConfigName("config")
 
 	fmt.Println(viper.ConfigFileUsed())
