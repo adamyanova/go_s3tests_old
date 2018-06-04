@@ -1,38 +1,33 @@
 DEFAULT :
-
-    host : s3.amazonaws.com
-    port : 8080
+    host : 172.21.15.019
+    port : 7280
     is_secure : yes
 
 fixtures :
-
     bucket_prefix : joannah
 
 s3main :
-
     access_key : 0555b35654ad1656d804
     access_secret : h7GhxuBLTrlhVUyxSPUKUV8r/2EI4ngqJxD7iBdBYLhwluN30JaT3Q==
     bucket : bucket1
     region : us-east-1
-    endpoint : localhost:8000
-    host : localhost
-    port : 8000
+    endpoint : 172.21.15.019:7280
+    host : 172.21.15.019
+    port : 7280
     display_name :
-    email : someone@gmail.com
+    email : tester@gmail.com
     is_secure : false
     SSE : AES256
     kmskeyid : barbican_key_id
 
-
 s3alt :
-
     access_key : NOPQRSTUVWXYZABCDEFG
     access_secret : nopqrstuvwxyzabcdefghijklmnabcdefghijklm
     bucket : bucket1
     region : us-east-1
-    endpoint : localhost:8000
+    endpoint : 172.21.15.019:7280
     display_name :
-    email : someone@gmail.com
+    email : johndoe@gmail.com
     SSE : your SSE
     kmskeyid : barbican_key_id
     is_secure : false
