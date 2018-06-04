@@ -23,7 +23,9 @@ import (
 
 func LoadConfig() error {
 
-	viper.SetConfigFile("../config.yaml")  
+	viper.SetConfigType("yaml")
+	viper.AddConfigPath("../")
+	viper.SetConfigName("config")
 
   	err := viper.ReadInConfig() 
   	if err != nil {
