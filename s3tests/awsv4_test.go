@@ -1,9 +1,9 @@
 package s3test
 
 import (
-	"github.com/aws/aws-sdk-go/aws"
+	// "github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/signer/v4"
-	"github.com/aws/aws-sdk-go/service/s3"
+	// "github.com/aws/aws-sdk-go/service/s3"
 	"github.com/spf13/viper"
 
 	"bytes"
