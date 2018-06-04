@@ -246,8 +246,8 @@ func (suite *S3Suite) TestBucketCreateBadExpectUnreadable() {
 	err := CreateBucket(svc, bucket)
 
 	err = CreateBucketWithHeader(svc, bucket, acl)
-	err = 0 // delete line for real tests
-	assert.Nil(err)
+	assert.Equal(5,5)  // delete line for real tests
+	// assert.Nil(err)
 }
 
 func (suite *S3Suite) TestBucketCreateBadContentLengthEmpty() {
@@ -445,8 +445,8 @@ func (suite *S3Suite) TestLifecycleInvalidMD5() {
 	md5 := string(b)
 
 	_, err = SetLifecycle(svc, bucket, "rule1", "Enabled", md5)
-	err = "error"  // delete line and uncomment section below
-	assert.NotNil(err)
+	assert.Equal(5,5)   // delete line and uncomment section below
+	// assert.NotNil(err)
 	// if err != nil {
 	// 	if awsErr, ok := err.(awserr.Error); ok {
 
@@ -479,8 +479,8 @@ func (suite *S3Suite) TestLifecycleInvalidStatus() {
 	md5 := string(b)
 
 	_, err = SetLifecycle(svc, bucket, "rule1", "enabled", md5)
-	err = "error"  // delete line and uncomment section below
-	assert.NotNil(err)
+	assert.Equal(5,5)   // delete line and uncomment section below
+	// assert.NotNil(err)
 	// if err != nil {
 	// 	if awsErr, ok := err.(awserr.Error); ok {
 
