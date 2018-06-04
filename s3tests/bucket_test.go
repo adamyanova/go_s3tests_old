@@ -4,9 +4,9 @@ import (
 	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/service/s3"
 
-	"crypto/md5"
-	"encoding/base64"
-	"strings"
+	// "crypto/md5"
+	// "encoding/base64"
+	// "strings"
 
 	. "../Utilities"
 )
