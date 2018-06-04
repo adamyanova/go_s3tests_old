@@ -26,8 +26,8 @@ s3main :
 
 s3alt :
 
-    access_key : 0555b35654ad1656d804
-    access_secret : h7GhxuBLTrlhVUyxSPUKUV8r/2EI4ngqJxD7iBdBYLhwluN30JaT3Q==
+    access_key : NOPQRSTUVWXYZABCDEFG
+    access_secret : nopqrstuvwxyzabcdefghijklmnabcdefghijklm
     bucket : bucket1
     region : us-east-1
     endpoint : localhost:8000
