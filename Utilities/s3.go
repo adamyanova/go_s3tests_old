@@ -23,9 +23,11 @@ import (
 
 func LoadConfig() error {
 
-	viper.SetConfigType("yaml")
-	viper.AddConfigPath("./")
-	viper.SetConfigName("config")
+	// viper.SetConfigType("yaml")
+	// viper.AddConfigPath("./")
+	// viper.SetConfigName("config")
+	viper.SetConfigFile("/home/mu3e/Software/go_s3tests/s3tests/config.yaml")
+
 
 	fmt.Println(viper.ConfigFileUsed())
   	err := viper.ReadInConfig() 
