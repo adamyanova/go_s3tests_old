@@ -27,6 +27,7 @@ func LoadConfig() error {
 	viper.AddConfigPath("../")
 	viper.SetConfigName("config")
 
+	fmt.Println(viper.ConfigFileUsed())
   	err := viper.ReadInConfig() 
   	if err != nil {
     	fmt.Println("Config file not found...")
