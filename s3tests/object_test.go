@@ -1617,7 +1617,7 @@ func (suite *S3Suite) TestObjectCreateBadMd5Unreadable() {
 	*/
 
 	assert := suite
-	assert.Equal(5,5)
+	assert.Equal(5,5) // delete line and uncomment section below
 	// headers := map[string]string{"Content-MD5": "\x07"}
 	// content := "bar"
 
