@@ -13,8 +13,8 @@ bucket_prefix = "joannah"
 
 access_key = "0555b35654ad1656d804"
 access_secret = "h7GhxuBLTrlhVUyxSPUKUV8r/2EI4ngqJxD7iBdBYLhwluN30JaT3Q=="
-bucket = bucket1
-region = us-east-1
+bucket = "bucket1"
+region = "us-east-1"
 endpoint = "172.21.15.019:7280"
 host = "172.21.15.019"
 port = "7280"
@@ -29,8 +29,8 @@ kmskeyid = "barbican_key_id"
 
 access_key = "NOPQRSTUVWXYZABCDEFG"
 access_secret = "nopqrstuvwxyzabcdefghijklmnabcdefghijklm"
-bucket = bucket1
-region = us-east-1
+bucket = "bucket1"
+region = "us-east-1"
 endpoint = "172.21.15.019:7280"
 display_name = "John Doe"
 email = "johndoe@gmail.com"
