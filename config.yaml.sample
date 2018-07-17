@@ -1,19 +1,19 @@
 DEFAULT :
-    host : 172.21.15.019
-    port : 7280
+    host : s3.amazonaws.com 
+    port : 8080
     is_secure : yes
 
 fixtures :
-    bucket_prefix : joannah
+    bucket_prefix : yournamehere- 
 
 s3main :
     access_key : 0555b35654ad1656d804
     access_secret : h7GhxuBLTrlhVUyxSPUKUV8r/2EI4ngqJxD7iBdBYLhwluN30JaT3Q==
     bucket : bucket1
     region : us-east-1
-    endpoint : 172.21.15.019:7280
-    host : 172.21.15.019
-    port : 7280
+    endpoint : localhost:8000
+    host : localhost
+    port : 8000
     display_name :
     email : tester@gmail.com
     is_secure : false
@@ -25,7 +25,7 @@ s3alt :
     access_secret : nopqrstuvwxyzabcdefghijklmnabcdefghijklm
     bucket : bucket1
     region : us-east-1
-    endpoint : 172.21.15.019:7280
+    endpoint : localhost:8000
     display_name :
     email : johndoe@gmail.com
     SSE : your SSE
