@@ -38,6 +38,36 @@ func LoadConfig() error {
 
 var err = LoadConfig()
 
+// func LoadSSLCertificate(localCertFile string) {
+// 	insecure := flag.Bool("insecure-ssl", false, "Accept/Ignore all server SSL certificates")
+// 	flag.Parse()
+
+// 	// Get the SystemCertPool, continue with an empty pool on error
+// 	rootCAs, _ := x509.SystemCertPool()
+// 	if rootCAs == nil {
+// 		rootCAs = x509.NewCertPool()
+// 	}
+
+// 	// Read in the cert file
+// 	certs, err := ioutil.ReadFile(localCertFile)
+// 	if err != nil {
+// 		log.Fatalf("Failed to append %q to RootCAs: %v", localCertFile, err)
+// 	}
+
+// 	// Append our cert to the system pool
+// 	if ok := rootCAs.AppendCertsFromPEM(certs); !ok {
+// 		log.Println("No certs appended, using system certs only")
+// 	}
+
+// 	// Trust the augmented cert pool in our client
+// 	config := &tls.Config{
+// 		InsecureSkipVerify: *insecure,
+// 		RootCAs:            rootCAs,
+// 	}
+// 	tr := &http.Transport{TLSClientConfig: config}
+// 	client := &http.Client{Transport: tr}
+// }
+
 var Creds = credentials.NewStaticCredentials(viper.GetString("s3main.access_key"), viper.GetString("s3main.access_secret"), "")
 
 var cfg = aws.NewConfig().WithRegion(viper.GetString("s3main.region")).
@@ -553,7 +583,7 @@ func GetSetMetadata (metadata map[string]*string) map[string]*string {
 func GetObjectWithIfMatch(svc *s3.S3, bucket string, key string, condition string) (string, error) {
 
 	results, err := svc.GetObject(&s3.GetObjectInput{Bucket: aws.String(bucket), Key: aws.String(key), IfMatch: aws.String(condition)})
-
+	
 	var resp string
 	var errr error
 
@@ -572,7 +602,6 @@ func GetObjectWithIfMatch(svc *s3.S3, bucket string, key string, condition strin
 
 		resp, errr = "", err
 	}
-
 	return resp, errr
 }
 
@@ -624,7 +653,6 @@ func GetObjectWithIfModifiedSince(svc *s3.S3, bucket string, key string, time ti
 
 		resp, errr = "", err
 	}
-
 	return resp, errr
 }
 
@@ -650,7 +678,6 @@ func GetObjectWithIfUnModifiedSince(svc *s3.S3, bucket string, key string, time 
 
 		resp, errr = "", err
 	}
-
 	return resp, errr
 }
 
@@ -855,8 +882,9 @@ func SetLifecycle(svc *s3.S3, bucket , id , status, md5 string) (*s3.PutBucketLi
 	    },
 	}
 	req, resp := svc.PutBucketLifecycleConfigurationRequest(input)
-	req.HTTPRequest.Header.Set("Content-Md5", string(md5))
 
+	req.HTTPRequest.Header.Set("Content-Md5", string(md5))
+	
 	err := req.Send()
 
 	return resp, err
@@ -890,7 +918,11 @@ func SetACL (svc *s3.S3, bucket string, acl string)(*s3.PutBucketAclOutput, erro
 
 func SetupRequest(serviceName, region, body string) (*http.Request, io.ReadSeeker) {
 
-	endpoint := "https://" + serviceName + "." + region + "." + viper.GetString("s3main.endpoint")
+	var proto string = "http://"
+	if viper.GetBool("s3main.is_secure") {
+		proto = "https://"
+	}
+	endpoint := proto + serviceName + "." + region + "." + viper.GetString("s3main.endpoint")
 	reader := strings.NewReader(body)
 	req, _ := http.NewRequest("POST", endpoint, reader)
 	req.Header.Add("X-Amz-Target", "prefix.Operation")

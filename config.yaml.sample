@@ -1,7 +1,7 @@
 DEFAULT :
     host : s3.amazonaws.com 
     port : 8080
-    is_secure : yes
+    is_secure : true
 
 fixtures :
     bucket_prefix : yournamehere- 
