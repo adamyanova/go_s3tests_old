@@ -215,20 +215,20 @@ func (suite *S3Suite) TestStandaloneSignCustomURIEscape() {
 
 	assert := suite
 	var credentials string = viper.GetString("s3main.access_key") + "/" + "19700101" + "/" 
-	credentials = credentials + viper.GetString("s3main.region") + "/" + "s3" + "/" + "aws4_request"
+	credentials = credentials + viper.GetString("s3main.region") + "/" + "es" + "/" + "aws4_request"
 	var expectedauth = "AWS4-HMAC-SHA256 Credential=" + credentials + ", SignedHeaders=host;x-amz-date"
 	signer := v4.NewSigner(Creds, func(s *v4.Signer) {
 		s.DisableURIPathEscaping = true
 	})
 
-	host := "https://subdomain.us-east-1.s3.amazonaws.com"
+	host := "https://subdomain.us-east-1.es.amazonaws.com"
 	req, err := http.NewRequest("GET", host, nil)
 	assert.Nil(err)
 
 	req.URL.Path = `/log-*/_search`
-	req.URL.Opaque = "//subdomain.us-east-1.s3.amazonaws.com/log-%2A/_search"
+	req.URL.Opaque = "//subdomain.us-east-1.es.amazonaws.com/log-%2A/_search"
 
-	_, err = signer.Sign(req, nil, "s3", "us-east-1", time.Unix(0, 0))
+	_, err = signer.Sign(req, nil, "es", "us-east-1", time.Unix(0, 0))
 	assert.Nil(err)
 
 	actual := req.Header.Get("Authorization")
