@@ -3,7 +3,7 @@
 
 host = "172.21.15.019"
 port = "7280"
-is_secure = "yes"
+is_secure = true
 
 [fixtures]
 
@@ -21,8 +21,8 @@ port = "7280"
 display_name = "Mr. Tester"
 email = "tester@ceph.com"
 is_secure = false
-SSE = "AES256"
-kmskeyid = "barbican_key_id"
+SSE = "aws:kms"
+kmskeyid = "testkey-1"
 
 
 [s3alt]
@@ -34,6 +34,6 @@ region = "us-east-1"
 endpoint = "172.21.15.019:7280"
 display_name = "John Doe"
 email = "johndoe@gmail.com"
-SSE = "your SSE"
-kmskeyid = "barbican_key_id"
+SSE = "aws:kms"
+kmskeyid = "testkey-1"
 is_secure = false

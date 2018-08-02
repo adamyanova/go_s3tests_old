@@ -17,7 +17,7 @@ s3main :
     display_name :
     email : tester@gmail.com
     is_secure : false
-    SSE : AES256
+    SSE : aws:kms
     kmskeyid : barbican_key_id
 
 s3alt :

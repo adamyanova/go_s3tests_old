@@ -14,8 +14,8 @@ s3main :
     display_name :
     email : 
     is_secure : 
-    SSE : AES256
-    kmskeyid : barbican_key_id
+    SSE : aws:kms
+    kmskeyid : testkey-1
 
 s3alt :
     access_key : 
@@ -24,6 +24,6 @@ s3alt :
     region : us-east-1
     display_name :
     email : 
-    SSE : AES256
-    kmskeyid : barbican_key_id
+    SSE : aws:kms
+    kmskeyid : testkey-1
     is_secure : 

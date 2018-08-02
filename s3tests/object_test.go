@@ -676,6 +676,7 @@ func (suite *S3Suite) TestSSEKMSbarbTransfer13B() {
 	assert := suite
 
 	rdata, data, err := SSEKMSkeyIdCustomerWrite(svc, 13)
+	
 	if awsErr, ok := err.(awserr.Error); ok {
 
 		assert.NotNil(awsErr)
@@ -700,6 +701,7 @@ func (suite *S3Suite) TestSSEKMSbarbTransfer1MB() {
 	assert := suite
 
 	rdata, data, err := SSEKMSkeyIdCustomerWrite(svc, 1024*1024)
+	
 	if awsErr, ok := err.(awserr.Error); ok {
 
 		assert.NotNil(awsErr)
@@ -724,7 +726,7 @@ func (suite *S3Suite) TestSSEKMSbarbTransfer1KB() {
 	assert := suite
 
 	rdata, data, err := SSEKMSkeyIdCustomerWrite(svc, 1024)
-
+	
 	if awsErr, ok := err.(awserr.Error); ok {
 
 		assert.NotNil(awsErr)
@@ -748,6 +750,7 @@ func (suite *S3Suite) TestSSEKMSbarbTransfer1B() {
 	assert := suite
 
 	rdata, data, err := SSEKMSkeyIdCustomerWrite(svc, 1)
+	
 	if awsErr, ok := err.(awserr.Error); ok {
 
 		assert.NotNil(awsErr)
@@ -772,6 +775,7 @@ func (suite *S3Suite) TestSSEKMSTransfer13B() {
 	assert := suite
 
 	rdata, data, err := SSEKMSCustomerWrite(svc, 13)
+	
 	if awsErr, ok := err.(awserr.Error); ok {
 
 		assert.NotNil(awsErr)
@@ -795,6 +799,7 @@ func (suite *S3Suite) TestSSEKMSTransfer1MB() {
 	assert := suite
 
 	rdata, data, err := SSEKMSCustomerWrite(svc, 1024*1024)
+	
 	if awsErr, ok := err.(awserr.Error); ok {
 
 		assert.NotNil(awsErr)
@@ -818,12 +823,12 @@ func (suite *S3Suite) TestSSEKMSTransfer1KB() {
 	assert := suite
 
 	rdata, data, err := SSEKMSCustomerWrite(svc, 1024)
+	
 	if awsErr, ok := err.(awserr.Error); ok {
 
 		assert.NotNil(awsErr)
 
 	} else {
-
 		assert.Nil(err)
 		assert.Equal(rdata, data)
 
@@ -842,8 +847,7 @@ func (suite *S3Suite) TestSSEKMSTransfer1B() {
 	assert := suite
 
 	rdata, data, err := SSEKMSCustomerWrite(svc, 1)
-	rdata, data, err = SSEKMSCustomerWrite(svc, 1024)
-
+	
 	if awsErr, ok := err.(awserr.Error); ok {
 
 		assert.NotNil(awsErr)
@@ -872,7 +876,7 @@ func (suite *S3Suite) TestSSEKMSPresent() {
 	err := CreateBucket(svc, bucket)
 
 	err = WriteSSEKMSkeyId(svc, bucket, "kay1", "test", viper.GetString("s3main.SSE"), viper.GetString("s3main.kmskeyid"))
-
+	
 	if awsErr, ok := err.(awserr.Error); ok {
 
 		assert.NotNil(awsErr)
@@ -902,10 +906,10 @@ func (suite *S3Suite) TestSSEKMSNoKey() {
 	err := CreateBucket(svc, bucket)
 
 	err = WriteSSEKMSkeyId(svc, bucket, "kay1", "test", viper.GetString("s3main.SSE"), "")
+	
 	if awsErr, ok := err.(awserr.Error); ok {
-
 		assert.NotNil(awsErr)
-
+		assert.Equal("InvalidAccessKeyId", awsErr.Code())
 	} else {
 
 		assert.NotNil(err)
@@ -918,7 +922,7 @@ func (suite *S3Suite) TestSSEKMSNotDeclared() {
 	/*
 		Resource : object, method: put
 		Scenario : dDo not declare SSE-KMS but provide key_id
-		Assertion: sucessful not encryption.
+		Assertion: fails if either the aws:kms or key_id is not declared
 	*/
 
 	assert := suite
@@ -928,20 +932,15 @@ func (suite *S3Suite) TestSSEKMSNotDeclared() {
 	err := CreateBucket(svc, bucket)
 
 	err = WriteSSEKMSkeyId(svc, bucket, "kay1", "test", "", viper.GetString("s3main.kmskeyid"))
-	err = WriteSSEKMSkeyId(svc, bucket, "kay1", "test", viper.GetString("s3main.SSE"), "")
-
 	if awsErr, ok := err.(awserr.Error); ok {
-
+		
 		assert.NotNil(awsErr)
-
-	} else {
-
-		assert.Nil(err)
-		data, _ := GetObject(svc, bucket, "kay1")
-
-		assert.Equal("test", data)
 	}
-
+	err = WriteSSEKMSkeyId(svc, bucket, "kay1", "test", viper.GetString("s3main.SSE"), "")
+	if awsErr, ok := err.(awserr.Error); ok {
+		
+		assert.NotNil(awsErr)
+	} 
 }
 
 //...................................... get object with conditions....................
@@ -1482,7 +1481,7 @@ func (suite *S3Suite) TestMultipartUploadInvalidPart() {
 // 	fmt.Println("Resp: ", resp)
 
 // 	_, err = CompleteMultiUpload(svc, bucket, key_name, int64(num_parts), "*result.UploadId", *resp.ETag)
-// 	fmt.Println("Err: ", err)
+// 	
 // 	assert.NotNil(err)
 // 	if err != nil {
 // 		if awsErr, ok := err.(awserr.Error); ok {

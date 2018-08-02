@@ -19,6 +19,12 @@ import (
 	"os"
 	"time"
 	"net/http"
+
+	// "crypto/x509"
+	// "flag"
+	// "io/ioutil"
+	// "log"
+	// "crypto/tls"
 )
 
 func LoadConfig() error {
@@ -38,41 +44,15 @@ func LoadConfig() error {
 
 var err = LoadConfig()
 
-// func LoadSSLCertificate(localCertFile string) {
-// 	insecure := flag.Bool("insecure-ssl", false, "Accept/Ignore all server SSL certificates")
-// 	flag.Parse()
-
-// 	// Get the SystemCertPool, continue with an empty pool on error
-// 	rootCAs, _ := x509.SystemCertPool()
-// 	if rootCAs == nil {
-// 		rootCAs = x509.NewCertPool()
-// 	}
-
-// 	// Read in the cert file
-// 	certs, err := ioutil.ReadFile(localCertFile)
-// 	if err != nil {
-// 		log.Fatalf("Failed to append %q to RootCAs: %v", localCertFile, err)
-// 	}
-
-// 	// Append our cert to the system pool
-// 	if ok := rootCAs.AppendCertsFromPEM(certs); !ok {
-// 		log.Println("No certs appended, using system certs only")
-// 	}
-
-// 	// Trust the augmented cert pool in our client
-// 	config := &tls.Config{
-// 		InsecureSkipVerify: *insecure,
-// 		RootCAs:            rootCAs,
-// 	}
-// 	tr := &http.Transport{TLSClientConfig: config}
-// 	client := &http.Client{Transport: tr}
-// }
+const (
+	localCertFile = "/home/mu3e/Software/ceph-master/build/cert.pem"
+)
 
 var Creds = credentials.NewStaticCredentials(viper.GetString("s3main.access_key"), viper.GetString("s3main.access_secret"), "")
 
 var cfg = aws.NewConfig().WithRegion(viper.GetString("s3main.region")).
 	WithEndpoint(viper.GetString("s3main.endpoint")).
-	WithDisableSSL(true).
+	WithDisableSSL(!viper.GetBool("s3main.is_secure")).
 	WithLogLevel(3).
 	WithS3ForcePathStyle(true).
 	WithCredentials(Creds)
@@ -482,11 +462,12 @@ func SSEKMSCustomerWrite(svc *s3.S3, filesize int) (string, string, error) {
 	data :=  strings.Repeat("A", filesize)
 	key := "testobj"
 	bucket := GetBucketName()
-	sse := viper.GetString("s3main.SSE")
+	sse := "aws:kms"
+	kmskeyid := viper.GetString("s3main.kmskeyid")
 
 	err := CreateBucket(svc, bucket)
 
-	err = WriteSSEKMS(svc, bucket, key, data, sse)
+	err = WriteSSEKMSkeyId(svc, bucket, key, data, sse, kmskeyid)
 
 	rdata, _ := GetObject(svc, bucket, key)
 
