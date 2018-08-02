@@ -221,14 +221,14 @@ func (suite *S3Suite) TestStandaloneSignCustomURIEscape() {
 		s.DisableURIPathEscaping = true
 	})
 
-	host := "https://subdomain.us-east-1.es.amazonaws.com"
+	host := "https://subdomain.us-east-1.s3.amazonaws.com"
 	req, err := http.NewRequest("GET", host, nil)
 	assert.Nil(err)
 
 	req.URL.Path = `/log-*/_search`
-	req.URL.Opaque = "//subdomain.us-east-1.es.amazonaws.com/log-%2A/_search"
+	req.URL.Opaque = "//subdomain.us-east-1.s3.amazonaws.com/log-%2A/_search"
 
-	_, err = signer.Sign(req, nil, "es", "us-east-1", time.Unix(0, 0))
+	_, err = signer.Sign(req, nil, "s3", "us-east-1", time.Unix(0, 0))
 	assert.Nil(err)
 
 	actual := req.Header.Get("Authorization")
