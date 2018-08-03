@@ -1456,8 +1456,6 @@ func (suite *S3Suite) TestMultipartUploadInvalidPart() {
 }
 
 // func (suite *S3Suite) TestMultipartUploadNoSuchUpload() {
-// assert.Equal(5,5)  // delete line for real tests
-
 // 	/*
 // 		Resource : object, method: get
 // 		Scenario : check failure on multiple multi-part upload with invalid upload id
