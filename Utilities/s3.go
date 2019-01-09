@@ -19,6 +19,7 @@ import (
 	"os"
 	"time"
 	"net/http"
+	// "strconv"
 )
 
 func LoadConfig() error {
@@ -758,6 +759,7 @@ func UploadCopyPart (svc *s3.S3, bucket string, key string, source string, uploa
 
 func CompleteMultiUpload(svc *s3.S3, bucket string, key string, partNum int64, uploadid string, etag string )(*s3.CompleteMultipartUploadOutput, error){
 
+	// partNStr := strconv.FormatInt(partNum, 64)
 	input := &s3.CompleteMultipartUploadInput{
 	    Bucket: aws.String(bucket),
 	    Key:    aws.String(key),
@@ -771,6 +773,7 @@ func CompleteMultiUpload(svc *s3.S3, bucket string, key string, partNum int64, u
 		    },
 		UploadId: aws.String(uploadid),
 	}
+	fmt.Println("Parts", input)
 
 	result, err := svc.CompleteMultipartUpload(input)
 

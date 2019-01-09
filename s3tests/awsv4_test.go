@@ -2,6 +2,7 @@ package s3test
 
 import (
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/request"
 	"github.com/aws/aws-sdk-go/aws/signer/v4"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/spf13/viper"
@@ -178,17 +179,27 @@ func (suite *S3Suite) TestSignWithBodyNoReplaceRequestBody() {
 	assert.Equal(req.Body, origBody)
 }
 
-func (suite *S3Suite) TestPresignHandler() {
+func epochTime() time.Time { return time.Unix(0, 0) }
+
+func (suite *S3Suite) TestPresignHandlerAWS_1_16_2() {
+
+	svc.Handlers.Sign.SwapNamed(request.NamedHandler{
+			Name: v4.SignRequestHandler.Name,
+			Fn: func(r *request.Request) {
+					v4.SignSDKRequestWithCurrentTime(r, epochTime)
+			},
+	})
 
 	assert := suite
 	req, _ := svc.PutObjectRequest(&s3.PutObjectInput{
-		Bucket:             aws.String("bucket"),
-		Key:                aws.String("key"),
-		ContentDisposition: aws.String("a+b c$d"),
-		ACL:                aws.String("public-read"),
+			Bucket:             aws.String("bucket"),
+			Key:                aws.String("key"),
+			ContentDisposition: aws.String("a+b c$d"),
+			ACL:                aws.String("public-read"),
 	})
 
-	req.Time = time.Unix(0, 0)
+	req.Time = epochTime()
+	fmt.Println("req.Time: ", req.Time)
 	urlstr, err := req.Presign(5 * time.Minute)
 
 	assert.Nil(err)
@@ -201,7 +212,46 @@ func (suite *S3Suite) TestPresignHandler() {
 	expectedCred := credentials
 
 	u, _ := url.Parse(urlstr)
+	fmt.Println("URLstr: ", urlstr)
 	urlQ := u.Query()
+	fmt.Println("Qry: ", urlQ)
+	assert.Equal(expectedHost, u.Host)
+	assert.Equal(expectedCred, urlQ.Get("X-Amz-Credential"))
+	assert.Equal(expectedHeaders, urlQ.Get("X-Amz-SignedHeaders"))
+	assert.Equal(expectedDate, urlQ.Get("X-Amz-Date"))
+	assert.Equal("300", urlQ.Get("X-Amz-Expires"))
+
+	assert.NotContains(urlstr, "+") // + encoded as %20
+}
+
+
+func (suite *S3Suite) TestPresignHandler() {
+
+	assert := suite
+	req, _ := svc.PutObjectRequest(&s3.PutObjectInput{
+			Bucket:             aws.String("bucket"),
+			Key:                aws.String("key"),
+			ContentDisposition: aws.String("a+b c$d"),
+			ACL:                aws.String("public-read"),
+	})
+
+	req.Time = epochTime()
+	fmt.Println("req.Time: ", req.Time)
+	urlstr, err := req.Presign(5 * time.Minute)
+
+	assert.Nil(err)
+
+	expectedHost := viper.GetString("s3main.endpoint")
+	expectedDate := "19700101T000000Z"
+	expectedHeaders := "content-disposition;host;x-amz-acl"
+	var credentials string = viper.GetString("s3main.access_key") + "/" + "19700101" + "/" 
+	credentials = credentials + viper.GetString("s3main.region") + "/" + "s3" + "/" + "aws4_request"
+	expectedCred := credentials
+
+	u, _ := url.Parse(urlstr)
+	fmt.Println("URLstr: ", urlstr)
+	urlQ := u.Query()
+	fmt.Println("Qry: ", urlQ)
 	assert.Equal(expectedHost, u.Host)
 	assert.Equal(expectedCred, urlQ.Get("X-Amz-Credential"))
 	assert.Equal(expectedHeaders, urlQ.Get("X-Amz-SignedHeaders"))
